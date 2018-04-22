@@ -131,3 +131,13 @@ class AdapterProduct:
 
         except ProductException as e:
             raise e
+
+    @classmethod
+    def copy_product(cls, product_id):
+        source_product = Product.objects.get(pk=product_id)
+        source_product.pk = None
+        try:
+            source_product.save()
+        except IntegrityError:
+            raise ProductException('Не удалось добавить копию товара')
+        return source_product

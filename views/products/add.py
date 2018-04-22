@@ -12,6 +12,7 @@ class ProductsAddView(View):
         catalogs = Catalog.objects.all()
         pclasess = ProductClass.objects.all()
         pbrands = ProductBrand.objects.all()
+
         return render(request=request, template_name='cms/products/edit.html',
                       context={"title_page": "Товары", "product": product, "catalogs": catalogs, "product_class_list": pclasess, "product_brand_list": pbrands})
 
