@@ -1,22 +1,28 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from shop.models import AttributeForProduct
+from shop.models import Tag
 
 
 class ModalTags(View):
 
-    def get(self, request, attr_id=None):
-        _choices = AttributeForProduct.CAST_CHOICES
-        if attr_id:
-            attr = get_object_or_404(AttributeForProduct, pk=attr_id)
+    def get(self, request, tag_id=None):
+
+        if tag_id:
+            if tag_id == 'tagging':
+                return render(
+                    request=request,
+                    template_name='cms/tags/modal-mass-tagging.html',
+                    context={}
+                )
+            tag = get_object_or_404(Tag, pk=tag_id)
             return render(
                 request=request,
-                template_name='cms/attributes/modal-edit.html',
-                context={"item": attr, 'choices': _choices}
+                template_name='cms/tags/modal-edit.html',
+                context={"item": tag}
             )
         else:
             return render(
                 request=request,
-                template_name='cms/attributes/modal-add.html',
-                context={'choices': _choices}
+                template_name='cms/tags/modal-add.html',
+                context={}
             )
