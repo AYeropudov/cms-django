@@ -12,7 +12,7 @@ class ModalTags(View):
                 return render(
                     request=request,
                     template_name='cms/tags/modal-mass-tagging.html',
-                    context={}
+                    context={"tags": Tag.objects.all()}
                 )
             tag = get_object_or_404(Tag, pk=tag_id)
             return render(

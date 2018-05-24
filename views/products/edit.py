@@ -5,7 +5,6 @@ from shop.models import Product, Catalog, ProductClass, ProductBrand
 from cms.adapters import AdapterProduct
 from cms.adapters.exceptions import ProductException
 
-
 class ProductsEditView(View):
 
     def get(self, request, product_id):
@@ -25,7 +24,7 @@ class ProductsEditView(View):
                           "catalogs": catalogs,
                           "product_class_list": pclasess,
                           "product_brand_list": pbrands,
-                          'catalog': catalog
+                          'catalog': catalog,
                       })
 
     def post(self, request, product_id):
