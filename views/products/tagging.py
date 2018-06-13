@@ -1,12 +1,21 @@
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404
-from django.shortcuts import render
+from django.http import JsonResponse
 from django.views import View
-from shop.models import Product, ProductTag, Tag
+import json
+from shop.models import Product, Tag, ProductTag
+from django.db.utils import IntegrityError
 
-class TaggingProducts:
+
+class TaggingProducts(View):
     def post(self, request):
-        products_ids = request.POST['products']
-        tags_ids = request.POST['tags']
+        data = json.loads(request.body)
+        products_ids = data.get('products')
+        tags_ids = data.get('tags')
         tags = Tag.objects.filter(pk__in=tags_ids)
         products = Product.objects.filter(pk__in=products_ids)
+        for product in products:
+            for tag in tags:
+                try:
+                    ProductTag.objects.create(tag=tag, product=product)
+                except IntegrityError as e:
+                    pass
+        return JsonResponse(data={"result": "suucess"}, status=200)

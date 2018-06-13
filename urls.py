@@ -7,7 +7,7 @@ from cms.views import ProductsEditView
 from cms.views import ProductsCopyView
 from cms.views import TreeView, Attributes, ModalAttribute
 from cms.views import TreeView, CatalogsModals
-from cms.views import Tags, ModalTags
+from cms.views import Tags, ModalTags, TaggingProducts
 
 urlpatterns = [
     path('', IndexView.as_view(), name='cms.index'),
@@ -26,4 +26,6 @@ urlpatterns = [
 
     re_path(r'^tags/((?P<tag_id>\w+)/)?$', Tags.as_view(), name='cms.tags'),
     re_path(r'^modals/tags/((?P<tag_id>\w+)/)?$', ModalTags.as_view(), name='cms.tags.modal'),
+
+    path('products/tagging/', TaggingProducts.as_view(), name='cms.product.tagging')
 ]
